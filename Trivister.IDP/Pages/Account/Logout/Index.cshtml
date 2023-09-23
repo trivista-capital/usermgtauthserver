@@ -1,0 +1,57 @@
+@page 
+@model Trivister.IDP.Pages.Logout.Index
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+    href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@100;300&display=swap"
+    rel="stylesheet"
+/>
+
+<style>
+  div {
+    font-family: "Public Sans";
+  }
+  input {
+    padding: 8px 16px;
+    margin-bottom: 16px;
+    width: 100%;
+  }
+  .btn {
+    width: 20%;
+    padding: 8px 16px;
+    border-radius: 5px;
+    border: none;
+  }
+  .btn.btn-primary {
+    background: #006778;
+    color: white;
+  }
+  .btn.btn-secondary {
+    background: #b4b2b2;
+  }
+</style>
+
+<div
+    class="logout-page"
+    style="width: 50%; margin: 32px auto; text-align: center"
+>
+    <div class="lead">
+        <img
+            src="http://borrow-ease-admin.trivistang.com/email_templates/logo.png"
+            alt="Logo"
+            class="logo"
+            style="width: 120px"
+        />
+        <h2>Logout from Borrow Ease Admin</h2>
+        <p>Would you like to logout of IdentityServer?</p>
+    </div>
+
+    <form asp-page="/Account/Logout/Index">
+        <input type="hidden" name="logoutId" value="@Model.LogoutId" />
+
+        <div class="form-group">
+            <button class="btn btn-primary">Yes</button>
+        </div>
+    </form>
+</div>

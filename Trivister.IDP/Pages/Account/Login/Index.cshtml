@@ -1,0 +1,140 @@
+@page
+@model Trivister.IDP.Pages.Login.Index
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@100;300&display=swap"
+  rel="stylesheet"
+/>
+
+<style>
+  div {
+    font-family: "Public Sans";
+  }
+  input {
+    padding: 8px 16px;
+    margin-bottom: 16px;
+    width: 100%;
+  }
+  .btn {
+    width: 50%;
+    padding: 8px 16px;
+    border-radius: 5px;
+    border: none;
+  }
+  .btn.btn-primary {
+    background: #006778;
+    color: white;
+  }
+  .btn.btn-secondary {
+    background: #b4b2b2;
+  }
+</style>
+
+<div class="login-page" style="width: 50%; margin: 32px auto">
+  <div class="lead" style="text-align: center">
+    <img
+      src="http://borrow-ease-admin.trivistang.com/email_templates/logo.png"
+      alt="Logo"
+      class="logo"
+      style="width: 120px;"
+    />
+    <h2>Borrow Ease Admin Portal</h1>
+  </div>
+
+  <partial name="_ValidationSummary" />
+
+  <div class="row" style="width: 30%; margin: 0 auto">
+    @if (Model.View.EnableLocalLogin) {
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-header">
+          <h3 style="text-align: center">Login with your credentials</h3>
+        </div>
+
+        <div class="card-body">
+          <form asp-page="/Account/Login/Index">
+            <input type="hidden" asp-for="Input.ReturnUrl" />
+
+            <div class="form-group">
+              <label asp-for="Input.Username"></label>
+              <input
+                class="form-control"
+                placeholder="Username"
+                asp-for="Input.Username"
+                autofocus
+              />
+            </div>
+            <div class="form-group">
+              <label asp-for="Input.Password"></label>
+              <input
+                type="password"
+                class="form-control"
+                placeholder="Password"
+                asp-for="Input.Password"
+                autocomplete="off"
+              />
+            </div>
+
+            @if (Model.View.AllowRememberLogin) {
+            <div class="form-group">
+              <div class="form-check">
+                <input class="form-check-input" asp-for="Input.RememberLogin" />
+                <label class="form-check-label" asp-for="Input.RememberLogin">
+                  Remember My Login
+                </label>
+              </div>
+            </div>
+            }
+
+            <div style="display: flex">
+              <button
+                class="btn btn-secondary"
+                name="Input.Button"
+                value="cancel"
+                style="margin-right: 8px"
+              >
+                Cancel
+              </button>
+              <button class="btn btn-primary" name="Input.Button" value="login">
+                Login
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    } @if (Model.View.VisibleExternalProviders.Any()) {
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-header">
+          <h2>External Account</h2>
+        </div>
+        <div class="card-body">
+          <ul class="list-inline">
+            @foreach (var provider in Model.View.VisibleExternalProviders) {
+            <li class="list-inline-item">
+              <a
+                class="btn btn-secondary"
+                asp-page="/ExternalLogin/Challenge"
+                asp-route-scheme="@provider.AuthenticationScheme"
+                asp-route-returnUrl="@Model.Input.ReturnUrl"
+              >
+                @provider.DisplayName
+              </a>
+            </li>
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+    } @if (!Model.View.EnableLocalLogin &&
+    !Model.View.VisibleExternalProviders.Any()) {
+    <div class="alert alert-warning">
+      <strong>Invalid login request</strong>
+      There are no login schemes configured for this request.
+    </div>
+    }
+  </div>
+</div>
