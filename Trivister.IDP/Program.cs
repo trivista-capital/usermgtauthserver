@@ -19,6 +19,8 @@ try
 {
     var builder = WebApplication.CreateBuilder(args);
 
+    var env = builder.Environment.EnvironmentName;
+
     // if (!builder.Environment.IsDevelopment())
     // {
     //     var azureAppConfigConnectionString = "Endpoint=https://borroweaserolemgtappconfiguration.azconfig.io;Id=HCzz;Secret=6f/CG0HSRZNziyjQaXrjKwKzSm1oxh2K9Py/VJFSKw8=";
@@ -37,7 +39,7 @@ try
     // var azureAppInsightConnectionString = serviceProvider.Value.ConnectionString;
     // builder.Services.AddApplicationInsightsTelemetry(options =>
     //     options.ConnectionString = azureAppInsightConnectionString);
-    var connectionString = builder.Configuration.GetConnectionString("TravisterDbConnection");
+    var connectionString = builder.Configuration.GetConnectionString("TrivistaDbConnection");
     builder.Services.AddHttpContextAccessor();
     builder.Services.InjectApplicationServices(builder.Configuration);
     builder.Services.InjectPersistence(connectionString!);

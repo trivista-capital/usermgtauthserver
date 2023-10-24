@@ -24,10 +24,11 @@ public class ResourceOwnerPasswordValidator : IResourceOwnerPasswordValidator
 
     public async Task ValidateAsync(ResourceOwnerPasswordValidationContext context)
     {
-        var isValidated = await _mediator.Send(new LoginCommand(context.UserName, context.Password));
+        //var isValidated = await _mediator.Send(new LoginCommand(context.UserName, context.Password));
+        var isValidated = await _identityService.ValidateApplicationUser(context.UserName, context.Password);
         var user = await _identityService.GetUserNameByUserNameAsync(context.UserName);
         var role = await _identityService.GetUsersRole(user.Id);
-        if (isValidated.Item2.IsSuccess)
+        if (isValidated.IsSuccess)
         {
             var permissions = await _idpDbContext!.RolesPermissions!.Include(x=>x.Role).Include(x=>x.Permission).Where(x => x.RoleId == role.Id).ToListAsync();
             if (permissions.Any())

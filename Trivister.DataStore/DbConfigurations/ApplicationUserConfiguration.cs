@@ -15,6 +15,7 @@ public class ApplicationUserConfiguration: IEntityTypeConfiguration<ApplicationU
         appuser.NormalizedUserName = "femi.ibitolu@gmail.com".ToUpper();
         appuser.Address = "No sangotedo street aajah";
         appuser.RoleId = 1;
+        appuser.EmailConfirmed = true;
         //set user password
         PasswordHasher<ApplicationUser> ph = new PasswordHasher<ApplicationUser>();
         appuser.PasswordHash = ph.HashPassword(appuser, "Password@123");

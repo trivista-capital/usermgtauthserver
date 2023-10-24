@@ -157,7 +157,7 @@ public static class Config
                 PostLogoutRedirectUris =
                 {
                     "https://localhost:7262/signout-callback-oidc",
-                    "http://borrow-ease-admin.trivistang.com/signout-callback-oidc",
+                    "http://borrow-ease-admin.trivistang.com/signout-callback-oidc",//http://borrow-ease-identity.trivistang.com/  //http://borrow-ease-identity.trivistang.com/
                     "http://localhost:3000/signout-callback-oidc",
                     "http://localhost:3000/Admin/signout-callback-oidc"
                 },

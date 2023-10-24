@@ -53,11 +53,19 @@ public class IdentityService: IIdentityService
         
         public async Task<ErrorResult<ApplicationUser>> ValidateApplicationUser(string username, string password)
         {
-            var user = await _userManager.FindByNameAsync(username);
-            if (user is null) return ErrorResult.Fail<ApplicationUser>("username or password invalid");
-            var isPasswordValid = await _userManager.CheckPasswordAsync(user, password);
-            if(!isPasswordValid) return ErrorResult.Fail<ApplicationUser>("username or password invalid");
-            return ErrorResult.Ok(user);
+            try
+            {
+                var user = await _userManager.FindByNameAsync(username);
+                if (user is null) return ErrorResult.Fail<ApplicationUser>("username or password invalid");
+                var isPasswordValid = await _userManager.CheckPasswordAsync(user, password);
+                if(!isPasswordValid) return ErrorResult.Fail<ApplicationUser>("username or password invalid");
+                return ErrorResult.Ok(user);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
 
         }
 

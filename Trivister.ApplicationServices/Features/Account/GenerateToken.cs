@@ -41,11 +41,17 @@ public sealed class GenerateTokenCommandHandler: IRequestHandler<GenerateTokenCo
     private readonly IGetTokenClient _getTokenClient;
     private readonly IConfiguration _configuration;
     private readonly IIdentityService _identityService;
-    public GenerateTokenCommandHandler(IConfiguration configuration, IGetTokenClient getTokenClient, IIdentityService identityService)
+    private readonly IGlobalTSDbContext _dbContext;
+    
+    public GenerateTokenCommandHandler(IConfiguration configuration, 
+        IGetTokenClient getTokenClient, 
+        IIdentityService identityService, 
+        IGlobalTSDbContext dbContext)
     {
         _configuration = configuration;
         _getTokenClient = getTokenClient;
         _identityService = identityService;
+        _dbContext = dbContext;
     }
 
     public async Task<ErrorResult<TokenResult>> Handle(GenerateTokenCommand request, CancellationToken cancellationToken)
