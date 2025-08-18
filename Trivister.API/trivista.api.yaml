@@ -1,0 +1,123 @@
+﻿trigger:
+  branches:
+    include:
+      - main
+
+variables:
+  - group: Production
+  - name: password
+    value: $[variables.DOCKERHUB_PASSWORD]
+  - name: aspnetcoreenv
+    value: $[variables.ASPNETCORE_ENVIRONMENT]
+  - name: username
+    value: $[variables.DOCKERHUB_USERNAME]
+
+stages:
+  - stage: Build
+    displayName: 'Build and Push Docker Image'
+    jobs:
+      - job: Build
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - checkout: self
+
+          - script: |
+              echo "Checking environment: $(aspnetcoreenv)"
+            displayName: 'Check Environment Variable'
+
+          - task: UseDotNet@2
+            inputs:
+              packageType: 'sdk'
+              version: '8.x'
+
+          - task: Docker@2
+            displayName: 'Docker Login'
+            inputs:
+              containerRegistry: 'DockerConnection'
+              command: 'login'
+              username: $(DOCKERHUB_USERNAME)
+              password: $(DOCKERHUB_PASSWORD)
+              useSecrets: true
+
+          - task: Bash@3
+            displayName: 'List files in root directory'
+            inputs:
+              targetType: 'inline'
+              script: 'ls -la /home/vsts/work/1/s/'
+
+          - task: Bash@3
+            displayName: 'List files in Trivister.API directory'
+            inputs:
+              targetType: 'inline'
+              script: 'ls -la /home/vsts/work/1/s/'
+
+          - task: Docker@2
+            displayName: 'Build Docker image'
+            inputs:
+              containerRegistry: 'DockerConnection'
+              repository: 'trivista12/trivista-services'
+              command: 'build'
+              Dockerfile: 'Trivister.API/Dockerfile'
+              buildContext: '.'
+              tags: |
+                $(Build.BuildId)
+              arguments: '--no-cache --build-arg ASPNETCORE_ENVIRONMENT=$(aspnetcoreenv)'
+
+          - task: Docker@2
+            displayName: 'Push Docker image'
+            inputs:
+              containerRegistry: 'DockerConnection'
+              repository: 'trivista12/trivista-services'
+              command: 'push'
+              tags: |
+                $(Build.BuildId)
+              dockerCommand: 'push'
+
+
+  - stage: Deploy
+    displayName: 'Deploy to DigitalOcean'
+    dependsOn: Build
+    jobs:
+      - deployment: Deploy
+        displayName: Deploy
+        environment: Production
+        pool:
+          name: Azure Pipelines
+          vmImage: 'ubuntu-latest'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: SSH@0
+                  displayName: 'Pull latest image'
+                  inputs:
+                    sshEndpoint: 'DigitalOceanSSHConnection'
+                    runOptions: 'inline'
+                    inline: |
+                      docker pull trivista12/trivista-services:$(Build.BuildId)
+
+                - task: SSH@0
+                  displayName: 'Stop and remove existing container'
+                  inputs:
+                    sshEndpoint: 'DigitalOceanSSHConnection'
+                    runOptions: 'inline'
+                    inline: |
+                      docker ps -q --filter "name=trivista-usermanagement-api" | grep -q . && docker stop loan-api || true
+                      docker ps -aq --filter "name=trivista-usermanagement-api" | grep -q . && docker rm loan-api || true
+
+                - task: SSH@0
+                  displayName: 'Run new container'
+                  inputs:
+                    sshEndpoint: 'DigitalOceanSSHConnection'
+                    runOptions: 'inline'
+                    inline: |
+                      docker run -d --restart always --name trivista-usermanagement-api -p 8085:8080 -e ASPNETCORE_ENVIRONMENT=$(aspnetcoreenv) trivista12/trivista-services:$(Build.BuildId)
+
+                - task: SSH@0
+                  displayName: 'Restart container if necessary'
+                  inputs:
+                    sshEndpoint: 'DigitalOceanSSHConnection'
+                    runOptions: 'inline'
+                    inline: |
+                      docker restart trivista-usermanagement-api || true
