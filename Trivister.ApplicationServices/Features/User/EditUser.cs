@@ -21,6 +21,7 @@ public static class EditUserController
             .Produces<ErrorResult>(StatusCodes.Status400BadRequest)
             .Produces<ErrorResult>(StatusCodes.Status500InternalServerError)
             .WithTags("User Management")
+            .RequireAuthorization()
             .RequireCors("AllowSpecificOrigins");
         return app;
     }
@@ -43,6 +44,7 @@ public sealed class EditUserCommandHandler : IRequestHandler<EditUserCommand, Er
         var isUserRemoved = await _identityService.RemoveUserFromRole(user.Id);
         if (isUserRemoved.Value.Item1 == false) throw new BadRequestException(isUserRemoved.Error);
         user.SetFirstName(request.FirstName).SetLastName(request.LastName).SetEmail(request.Email);
+        if (request.UserType == "SuperAdmin") throw new BadRequestException("You can not have more than one super admin");
         var isUseRoleCreatedResponse = await _identityService.AddUserToRole(user, request.UserType);
         if (isUseRoleCreatedResponse.Value.Item2)
         {

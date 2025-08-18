@@ -136,19 +136,28 @@ public class IdentityService: IIdentityService
 
         public async Task<(ErrorResult Result, ApplicationUser user)> CreateUserAsync(Guid id, string firstName, string lastName, string email, string password)
         {
+            ApplicationUser user = ApplicationUser.Factory.Create();
             var doesUserExist = await _userManager.FindByNameAsync(email);
             if (doesUserExist != null) return (ErrorResult.Fail("Duplicate user"), ApplicationUser.Factory.Create());
-            var user = ApplicationUser.Factory.Create(id, firstName,  lastName,  email);
-            var result = await _userManager.CreateAsync(user, password);
-            if (result == null)
+            try
             {
-                _logger.LogError("Unable to register user for some reason in IdentityService.CreateUserAsync method");
-                throw new Exception();
+                user = ApplicationUser.Factory.Create(id, firstName, lastName, email);
+                var result = await _userManager.CreateAsync(user, password);
+                if (result == null)
+                {
+                    _logger.LogError("Unable to register user for some reason in IdentityService.CreateUserAsync method");
+                    throw new Exception();
+                }
+                if (result.Succeeded) return (ErrorResult.Ok(), user);
+                var errorArray = result.Errors.Select(x => x.Description).ToArray();
+                var error = string.Join(";", errorArray);
+                return (ErrorResult.Fail(error), user);
             }
-            if(result.Succeeded) return (ErrorResult.Ok(), user);
-            var errorArray = result.Errors.Select(x => x.Description).ToArray();
-            var error = string.Join(";", errorArray);
-            return (ErrorResult.Fail(error), user);
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occured while creting user");
+                return (ErrorResult.Fail("An error occured while creating user"), user);
+            }
         }
         
         public async Task<ErrorResult> CreateUserAsync(string password, ApplicationUser user)
@@ -358,8 +367,12 @@ public class IdentityService: IIdentityService
             {
                 var roles = _roleManager.Roles;
                 var role = await roles.Where(x => x.Name == roleName).Select(x=>x).FirstOrDefaultAsync();
-                var userIds = await _context?.UsersRole?.Where(x=>x.RoleId != role.Id).Select(x=>x.UserId).ToListAsync();
-                return userIds;
+            //var userIds = await _context?.UsersRole?.Where(x=>x.RoleId != role.Id).Select(x=>x.UserId).ToListAsync();
+            var userIds = await (from userRole in _context.UsersRole
+                                 where userRole.RoleId != role!.Id
+                                 select userRole.UserId)
+                .ToListAsync();
+            return userIds;
             }
             catch (Exception ex)
             {

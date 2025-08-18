@@ -12,7 +12,7 @@ public interface IMailBuilder
     MailBuilder WithPasswordSuccessfullyResetMessage(string name);
     MailBuilder WithWelcomeMessage(string name);
 
-    MailBuilder WithAdminUserInvitationMessage(string adminName);
+    MailBuilder WithAdminUserInvitationMessage(string adminName, string password);
 
     MailBuilder WithMessageToAdminOnCustomerRegistrationMessage(string adminName, string customerFullName,
         string customerEmail, string customerPhone, string dateOfRegistration);

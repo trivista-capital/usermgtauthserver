@@ -21,6 +21,7 @@ public static class AssignPermissionsToRoleController
       .Produces<ErrorResult<bool>>(StatusCodes.Status200OK)
       .Produces<ErrorResult<bool>>(StatusCodes.Status400BadRequest)
       .Produces<ErrorResult<bool>>(StatusCodes.Status500InternalServerError)
+      .RequireAuthorization()
       .RequireCors("AllowSpecificOrigins");
   }
 }

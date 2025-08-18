@@ -25,6 +25,7 @@ public static class GetUserController
             .Produces<ErrorResult<List<GetUserDto>>>(StatusCodes.Status200OK)
             .Produces<ErrorResult<List<GetUserDto>>>(StatusCodes.Status404NotFound)
             .WithTags("User Management")
+            .RequireAuthorization()
             .RequireCors("AllowSpecificOrigins");
     }
 }

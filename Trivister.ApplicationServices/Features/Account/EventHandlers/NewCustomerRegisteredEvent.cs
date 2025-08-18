@@ -34,7 +34,7 @@ public class NewCustomerRegisteredEventHandler: INotificationHandler<NewCustomer
         //Call and send OTP here
         try
         {
-            _mailManager.BuildMessageToAdminOnCustomerRegistrationMessage(notification.AdminEmail, notification.AdminName, notification.CustomerFullName, 
+            _mailManager.BuildMessageToAdminOnCustomerRegistrationMessage(notification.AdminEmail, notification.AdminName, notification.CustomerFullName,
                 notification.CustomerEmailAddress, notification.CustomerPhoneNumber, notification.DatOfRegistration);
         }
         catch (Exception ex)

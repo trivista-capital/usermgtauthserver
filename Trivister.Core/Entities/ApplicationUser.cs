@@ -10,6 +10,7 @@ public sealed class ApplicationUser: IdentityUser<Guid>
         CreatedOn=DateTime.UtcNow;
         LastModified=DateTime.UtcNow;
         IsDisabled = false;
+        EmailConfirmed = false;
     }
     private ApplicationUser(Guid id, string firstName, string lastName, string email)
     {
@@ -21,6 +22,7 @@ public sealed class ApplicationUser: IdentityUser<Guid>
         CreatedOn=DateTime.UtcNow;
         LastModified=DateTime.UtcNow;
         IsDisabled = false;
+        EmailConfirmed = false;
     }
     
     private ApplicationUser(string username, string password)
@@ -53,12 +55,12 @@ public sealed class ApplicationUser: IdentityUser<Guid>
     {
         public static ApplicationUser Create(Guid id, string firstName, string lastName, string email)
         {
-            return new ApplicationUser(id, firstName, lastName, email);
+            return new ApplicationUser(id, firstName, lastName, email).SetEmailConfirmed();
         }
         
         public static ApplicationUser Create(string username, string password)
         {
-            return new ApplicationUser(username, password);
+            return new ApplicationUser(username, password).SetEmailConfirmed();
         }
         
         public static ApplicationUser Create()
@@ -113,7 +115,13 @@ public sealed class ApplicationUser: IdentityUser<Guid>
         this.CreatedOn = DateTime.UtcNow;
         return this;
     }
-    
+
+    public ApplicationUser SetEmailConfirmed()
+    {
+        this.EmailConfirmed = false;
+        return this;
+    }
+
     public void Apply(object @event)
     {
         When(@event);

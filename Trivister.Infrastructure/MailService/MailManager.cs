@@ -10,38 +10,39 @@ using Trivister.ApplicationServices.Abstractions;
 using Trivister.ApplicationServices.Common.Helper;
 using Trivister.ApplicationServices.Common.Options;
 using Trivister.ApplicationServices.Dto;
+using FluentEmail.Core;
+using FluentEmail.Core.Models;
+using SendGrid.Helpers.Errors.Model;
 
 namespace Trivister.Infrastructure.MailService;
 
 public sealed class MailManager: IMailManager
 {
     private static MailOptions _mailOptions;
+    private static SendGridOption _sndGridOptions;
     private readonly HttpClient _client;
     private readonly ILogger<MailManager> _logger;
+    private readonly IFluentEmail _fluentEmail;
 
-    public MailManager(IOptions<MailOptions> mailOptions, HttpClient client, ILogger<MailManager> logger)
+    public MailManager(
+        IOptions<MailOptions> mailOptions,
+        IOptions<SendGridOption> sndGridOptions,
+        HttpClient client, 
+        ILogger<MailManager> logger, 
+        IFluentEmail fluentEmail)
     {
         _client = client;
         _logger = logger;
         _mailOptions = mailOptions.Value;
+        _sndGridOptions = sndGridOptions.Value;
+        _fluentEmail = fluentEmail;
     }
-    
+
     public async Task BuildSignUpMessage(string otp, string to, string name)
     {
         _logger.LogInformation("Inside the BuildSignUpMessage method");
         try
         {
-            // MailObject mObject = new()
-            // {
-            //     To = to,
-            //     From = _mailOptions.From,
-            //     CharSet = "utf-8",
-            //     BodyAmp = "est",
-            //     IsTransactional = true,
-            //     Sender = _mailOptions.From,
-            //     Subject = _mailOptions.OTPMailSubject
-            // };
-            
             var builder = new MailBuilder();
              var mailObject = builder.WithToEmail(to)
                  .WithFromEmail(_mailOptions.From)
@@ -102,22 +103,22 @@ public sealed class MailManager: IMailManager
         await SendEmailAsync(mailObject);
     }
     
-    public async Task BuildAdminUserInvitationMessage(string to, string adminName)
+    public async Task BuildAdminUserInvitationMessage(string to, string adminName, string password)
     {
         var builder = new MailBuilder();
         var mailObject = builder.WithToEmail(to)
             .WithFromEmail(_mailOptions.From)
             .WithOTPSubject(_mailOptions.AdminWelcomeSubject)
-            .WithAdminUserInvitationMessage(adminName)
+            .WithAdminUserInvitationMessage(adminName, password)
             .BuildOtpMailDto(); 
         await SendEmailAsync(mailObject);
     }
 
-    public async Task BuildMessageToAdminOnCustomerRegistrationMessage(string to, string adminName, string customerFullName,
+    public async Task BuildMessageToAdminOnCustomerRegistrationMessage(string adminEmail, string adminName, string customerFullName,
         string customerEmail, string customerPhone, string dateOfRegistration)
     {
         var builder = new MailBuilder();
-        var mailObject = builder.WithToEmail(to)
+        var mailObject = builder.WithToEmail(adminEmail)
             .WithFromEmail(_mailOptions.From)
             .WithOTPSubject(_mailOptions.AdminNotificatinOfCustomerRegistrationSubject)
             .WithMessageToAdminOnCustomerRegistrationMessage(adminName,  customerFullName, customerEmail,  customerPhone, dateOfRegistration)
@@ -172,28 +173,86 @@ public sealed class MailManager: IMailManager
         }
     }
     
-    private async Task SendEmailAsync(MailObject model)
+    //private async Task SendEmailAsync(MailObject model)
+    //{
+    //    _logger.LogInformation("Entered the SendEmailAsync method");
+    //    try
+    //    {
+    //        _logger.LogInformation("Sending email");
+    //        var content = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
+    //        _logger.LogInformation("Mail info sent is: {Info}", model);
+    //        var result = await _client.PostAsync("/sendMail", content);
+    //        if (result.IsSuccessStatusCode)
+    //        {
+    //            var con = result.Content.ReadAsStringAsync();
+    //            _logger.LogInformation("Mail sending was successful");
+    //        }
+    //        var response = result.Content.ReadAsStringAsync();
+    //        _logger.LogInformation("Mail sending was not successful with message: {Message}", response);
+    //    }
+    //    catch (ApiException  ex)
+    //    {
+    //        _logger.LogError(ex, "Exception when calling EmailsApi.EmailsPost: {@Message}",  ex.Message);
+    //        _logger.LogInformation("Status Code: {@StatusCode} ", ex.ErrorCode);
+    //        _logger.LogInformation(ex.StackTrace);
+    //    }
+    //}
+
+    public async Task SendEmailAsync(MailObject model)
     {
-        _logger.LogInformation("Entered the SendEmailAsync method");
         try
         {
-            _logger.LogInformation("Sending email");
-            var content = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
-            _logger.LogInformation("Mail info sent is: {Info}", model);
-            var result = await _client.PostAsync("/sendMail", content);
-            if (result.IsSuccessStatusCode)
+            var fluentEmail = _fluentEmail.SetFrom(_sndGridOptions.DefaultFromEmail).Subject(model.Subject).To(model.To);
+
+            var response = await fluentEmail.Tag(Guid.NewGuid().ToString()).UsingTemplate(model.BodyAmp, model).SendAsync();
+
+
+            if (response.Successful)
             {
-                var con = result.Content.ReadAsStringAsync();
-                _logger.LogInformation("Mail sending was successful");
+                await Task.CompletedTask;
+                return;
             }
-            var response = result.Content.ReadAsStringAsync();
+
             _logger.LogInformation("Mail sending was not successful with message: {Message}", response);
+            await Task.CompletedTask;
         }
-        catch (ApiException  ex)
+        catch (Exception ex)
         {
-            _logger.LogError(ex, "Exception when calling EmailsApi.EmailsPost: {@Message}",  ex.Message);
-            _logger.LogInformation("Status Code: {@StatusCode} ", ex.ErrorCode);
-            _logger.LogInformation(ex.StackTrace);
+            _logger.LogError(ex, "An error occured while sending mail");
+            var errorResponse = JsonConvert.DeserializeObject<SendGridErrorResponse>(ex.Message);
+            switch (errorResponse!.ErrorHttpStatusCode)
+            {
+                case 401:
+                    _logger.LogError(ex, errorResponse.SendGridErrorMessage);
+                    break;
+                case 400:
+                    _logger.LogError(ex, errorResponse.SendGridErrorMessage);
+                    break;
+                case 429:
+                    _logger.LogError(ex, errorResponse.SendGridErrorMessage);
+                    break;
+                case 500:
+                    _logger.LogError(ex, errorResponse.SendGridErrorMessage);
+                    break;
+            }
         }
+
+        await Task.CompletedTask;
     }
+
+    //private IEnumerable<FluentEmail.Core.Models.Attachment> AttachFiles(ICollection<MailAttachmentRequest> attachments)
+    //{
+    //    if (!attachments.Any()) return Enumerable.Empty<FluentEmail.Core.Models.Attachment>();
+
+    //    return (from attachment in attachments
+    //            let file = FileHelper.ConvertToMailFile(attachment.Base64)
+    //            let byteArray = FileHelper.ConvertToByte(attachment.Base64)
+    //            select new FluentEmail.Core.Models.Attachment
+    //            {
+    //                Filename = attachment.Name,
+    //                Data = FileHelper.GetMemoryStream(byteArray),
+    //                ContentType = attachment.Extension,
+    //                IsInline = true
+    //            }).ToList();
+    //}
 }

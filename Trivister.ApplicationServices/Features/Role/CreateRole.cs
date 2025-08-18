@@ -29,8 +29,8 @@ public static class CreateRoleController
             .Produces<ErrorResult<bool>>(StatusCodes.Status200OK)
             .Produces<ErrorResult<bool>>(StatusCodes.Status400BadRequest)
             .Produces<ErrorResult<bool>>(StatusCodes.Status500InternalServerError)
-            .RequireCors("AllowSpecificOrigins");
-        //.RequireAuthorization();
+            .RequireCors("AllowSpecificOrigins")
+        .RequireAuthorization();
     }
 }
 

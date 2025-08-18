@@ -5,10 +5,10 @@ namespace Trivister.Infrastructure.MailService;
 
 public sealed class MailBuilder: IMailBuilder
 {
-    private string _message;
-    private string _subject;
-    private string _toEmail;
-    private string _fromEmail;
+    private string? _message;
+    private string? _subject;
+    private string? _toEmail;
+    private string? _fromEmail;
 
     public MailBuilder WithToEmail(string toEmail)
     {
@@ -50,10 +50,10 @@ public sealed class MailBuilder: IMailBuilder
         return this;
     }
     
-    public MailBuilder WithAdminUserInvitationMessage(string adminName)
+    public MailBuilder WithAdminUserInvitationMessage(string adminName, string password)
     {
         var rawMailTemplate = EmailTemplateHelper.ExtractMailTemplate("page13-new-admin-user.html");
-        _message = rawMailTemplate.Replace("{Admin's Name}", adminName);
+        _message = rawMailTemplate.Replace("{Admin's Name}", adminName).Replace("{password}", password).Replace("{admin email}", adminName);
         return this;
     }
     
@@ -68,9 +68,9 @@ public sealed class MailBuilder: IMailBuilder
         return this;
     }
 
-    public MailBuilder WithOTPSubject(string otpSubject)
+    public MailBuilder WithOTPSubject(string subject)
     {
-        _subject = otpSubject;
+        _subject = subject;
         return this;
     }
 
@@ -78,13 +78,13 @@ public sealed class MailBuilder: IMailBuilder
     {
         return new MailObject()
         {
-            BodyAmp = _message,
+            BodyAmp = _message!,
             CharSet = "utf-8",
-            From = _fromEmail,
+            From = _fromEmail!,
             IsTransactional = true,
-            To = _toEmail,
-            Sender = _fromEmail,
-            Subject = _subject
+            To = _toEmail!,
+            Sender = _fromEmail!,
+            Subject = _subject!
         };
     }
 

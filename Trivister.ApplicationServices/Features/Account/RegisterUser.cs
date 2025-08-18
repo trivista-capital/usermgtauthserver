@@ -67,12 +67,13 @@ public class RegistrationCommandHandler: IRequestHandler<RegistrationCommand, Er
     public async Task<ErrorResult<string>> Handle(RegistrationCommand request, CancellationToken cancellationToken)
     {
         //ApplicationUser user = ApplicationUser.Factory.Create();
-        var generatedPassword = new Random(7).ToString();
+        var generatedPassword = RandomNumbers.Generate(7);
         Guid userId = Guid.NewGuid();
         var password = string.IsNullOrEmpty(request.Password) ? generatedPassword : request.Password;
         var (result, appuser) = await _identityService.CreateUserAsync(userId, request.FirstName, request.LastName, 
             request.Email, password!);
         if (!result.IsSuccess) throw new BadRequestException(result.Error);
+        if(request.UserType == "SuperAdmin") throw new BadRequestException("You can not have more than one super admin");
         var isUseRoleCreatedResponse = await _identityService.AddUserToRole(appuser, request.UserType);
         var (roleId, isCreated) = isUseRoleCreatedResponse.Value;
         if (!isCreated)
@@ -93,7 +94,7 @@ public class RegistrationCommandHandler: IRequestHandler<RegistrationCommand, Er
                 Email = request.Email,
                 Name = $"{request.FirstName} {request.LastName}"
             }, cancellationToken);
-            
+
             await _publisher.Publish(new NewCustomerRegisteredEvent()
             {
                 AdminEmail = admin.Email,
@@ -120,6 +121,24 @@ public class RegistrationCommandHandler: IRequestHandler<RegistrationCommand, Er
             Address = "", UserType = request.UserType
         });
         return ErrorResult.Ok<string>("Registered successfully");
+    }
+}
+
+public class RandomNumbers
+{
+    public static string Generate(int count)
+    {
+        var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        var Charsarr = new char[8];
+        var random = new Random();
+
+        for (int i = 0; i < Charsarr.Length; i++)
+        {
+            Charsarr[i] = characters[random.Next(characters.Length)];
+        }
+
+        var resultString = new String(Charsarr);
+        return resultString;
     }
 }
 

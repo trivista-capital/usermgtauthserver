@@ -9,6 +9,8 @@ public class AdminRegisteredEvent: INotification
 {
     public string Email { get; set; }
     public string Name { get; set; }
+
+    public string Password { get; set; }
 }
 
 public class AdminRegisteredEventHandler: INotificationHandler<AdminRegisteredEvent>
@@ -27,7 +29,7 @@ public class AdminRegisteredEventHandler: INotificationHandler<AdminRegisteredEv
         //Call and send OTP here
         try
         {
-            _mailManager.BuildAdminUserInvitationMessage(to: notification.Email, adminName: notification.Name);
+            await _mailManager.BuildAdminUserInvitationMessage(to: notification.Email, adminName: notification.Name, password: notification!.Password);
         }
         catch (Exception ex)
         {

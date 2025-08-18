@@ -21,6 +21,7 @@ public static class DeleteUserController
             .Produces<ErrorResult>(StatusCodes.Status400BadRequest)
             .Produces<ErrorResult>(StatusCodes.Status500InternalServerError)
             .WithTags("User Management")
+            .RequireAuthorization()
             .RequireCors("AllowSpecificOrigins");
         return app;
     }

@@ -20,6 +20,7 @@ public static class ChangePasswordController
             .Produces<ErrorResult>(StatusCodes.Status400BadRequest)
             .Produces<ErrorResult>(StatusCodes.Status500InternalServerError)
             .WithTags("Authentication")
+            .RequireAuthorization()
             .RequireCors("AllowSpecificOrigins");
 
         return app;

@@ -24,7 +24,8 @@ public static class GetPermissionController
             .Produces<ErrorResult<List<GetPermissionOnlyDto>>>(StatusCodes.Status400BadRequest)
             .Produces<ErrorResult>(StatusCodes.Status404NotFound)
             .Produces<ErrorResult>(StatusCodes.Status500InternalServerError)
-            .RequireCors("AllowSpecificOrigins");
+            .RequireCors("AllowSpecificOrigins")
+            .RequireAuthorization();
         return app;
     }
 }

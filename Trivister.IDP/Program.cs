@@ -8,6 +8,7 @@ using Trivister.ApplicationServices.Extentions;
 using Trivister.Common.Model;
 using Trivister.DataStore.Extensions;
 using Trivister.Infrastructure;
+using Microsoft.IdentityModel.Logging;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -20,6 +21,7 @@ try
     var builder = WebApplication.CreateBuilder(args);
 
     var env = builder.Environment.EnvironmentName;
+    Log.Information("Environment is: {Environment}", env);
 
     // if (!builder.Environment.IsDevelopment())
     // {
@@ -39,6 +41,7 @@ try
     // var azureAppInsightConnectionString = serviceProvider.Value.ConnectionString;
     // builder.Services.AddApplicationInsightsTelemetry(options =>
     //     options.ConnectionString = azureAppInsightConnectionString);
+    IdentityModelEventSource.ShowPII = true;
     var connectionString = builder.Configuration.GetConnectionString("TrivistaDbConnection");
     builder.Services.AddHttpContextAccessor();
     builder.Services.InjectApplicationServices(builder.Configuration);

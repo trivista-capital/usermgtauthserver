@@ -10,10 +10,10 @@ public class ApplicationUserConfiguration: IEntityTypeConfiguration<ApplicationU
     public void Configure(EntityTypeBuilder<ApplicationUser> builder)
     {
         var userId = Guid.Parse("363b37a0-c306-4472-a405-4b576334cca0");
-        var appuser = ApplicationUser.Factory.Create(userId, "Babafemi", "Ibitolu", "femi.ibitolu@gmail.com");
+        var appuser = ApplicationUser.Factory.Create(userId, "Admin", "Admin", "tgslimited@gmail.com");//TGSLIMITED@GMAIL.COM
         appuser.EmailConfirmed = true;
-        appuser.NormalizedUserName = "femi.ibitolu@gmail.com".ToUpper();
-        appuser.Address = "No sangotedo street aajah";
+        appuser.NormalizedUserName = "tgslimited@gmail.com".ToUpper();
+        appuser.Address = "Address";
         appuser.RoleId = 1;
         appuser.EmailConfirmed = true;
         //set user password
@@ -25,6 +25,7 @@ public class ApplicationUserConfiguration: IEntityTypeConfiguration<ApplicationU
         builder.Property(x => x.Address).HasColumnType("nvarchar(500)").IsRequired(false);
         builder.Property(x => x.Email).HasColumnType("nvarchar(300)").IsRequired(true);
         builder.Property(x => x.PhoneNumber).HasColumnType("nvarchar(50)").IsRequired(false);
-        builder.HasData(appuser);
+        // builder.Property(x => x.EmailConfirmed).HasColumnType("bit").HasDefaultValue(true);
+        // builder.HasData(appuser);
     }
 }

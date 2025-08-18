@@ -186,33 +186,33 @@ namespace Trivister.DataStore.Migrations
                         new
                         {
                             Id = new Guid("3e7d9440-48d7-4174-b9c5-0ea5be7d9e7d"),
-                            ConcurrencyStamp = "fdc25f67-f77e-4653-8fd4-68ee77eb2df9",
-                            CreatedOn = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(2970),
+                            ConcurrencyStamp = "85170fc2-3f5d-4b4d-9013-1e9a005ff6c6",
+                            CreatedOn = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(8647),
                             Description = "",
                             IsDeleted = false,
-                            LastModified = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(2980),
+                            LastModified = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(8649),
                             Name = "SuperAdmin",
                             NormalizedName = "SUPERADMIN"
                         },
                         new
                         {
                             Id = new Guid("0834d4fc-a976-4428-b6f8-d47b832fad1a"),
-                            ConcurrencyStamp = "9d532a4e-ef53-405b-be96-88f4972eb90c",
-                            CreatedOn = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(3010),
+                            ConcurrencyStamp = "023f8c16-f18c-4dc4-a666-b6cd21cb2c9a",
+                            CreatedOn = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(8678),
                             Description = "",
                             IsDeleted = false,
-                            LastModified = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(3010),
+                            LastModified = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(8679),
                             Name = "Customer",
                             NormalizedName = "Customer"
                         },
                         new
                         {
                             Id = new Guid("bcf0f8de-c8c3-44ee-9c67-df972d604cf2"),
-                            ConcurrencyStamp = "a857b889-7af7-4ca7-9481-f5ba5ccf8235",
-                            CreatedOn = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(3030),
+                            ConcurrencyStamp = "7b122389-4794-402b-886d-0a8db01da7a6",
+                            CreatedOn = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(8735),
                             Description = "",
                             IsDeleted = false,
-                            LastModified = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(3030),
+                            LastModified = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(8736),
                             Name = "Staff",
                             NormalizedName = "Staff"
                         });
@@ -326,30 +326,6 @@ namespace Trivister.DataStore.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("363b37a0-c306-4472-a405-4b576334cca0"),
-                            AccessFailedCount = 0,
-                            Address = "No sangotedo street aajah",
-                            ConcurrencyStamp = "bf00ff08-0b86-42f4-915c-ecef6a356a12",
-                            CreatedOn = new DateTime(2023, 8, 11, 15, 23, 51, 40, DateTimeKind.Utc).AddTicks(70),
-                            Email = "femi.ibitolu@gmail.com",
-                            EmailConfirmed = true,
-                            FirstName = "Babafemi",
-                            IsDeleted = false,
-                            IsDisabled = false,
-                            LastModified = new DateTime(2023, 8, 11, 15, 23, 51, 40, DateTimeKind.Utc).AddTicks(70),
-                            LastName = "Ibitolu",
-                            LockoutEnabled = false,
-                            NormalizedUserName = "FEMI.IBITOLU@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKQDEjTqULEzQqDKbQMfVllLeyb7KGiLQE0PYhZBVUJlu6OobkUg9RzaJa3mGfkdXg==",
-                            PhoneNumberConfirmed = false,
-                            RoleId = 1,
-                            TwoFactorEnabled = false,
-                            UserName = "femi.ibitolu@gmail.com"
-                        });
                 });
 
             modelBuilder.Entity("Trivister.Core.Entities.OTPStore", b =>
@@ -442,217 +418,217 @@ namespace Trivister.DataStore.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1490),
+                            CreatedOn = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6501),
                             Description = "Can add user to the system",
                             IsDeleted = false,
-                            LastModified = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1490),
+                            LastModified = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6506),
                             Name = "CanAddUser"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedOn = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1490),
+                            CreatedOn = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6512),
                             Description = "Can delete user",
                             IsDeleted = false,
-                            LastModified = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1490),
+                            LastModified = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6513),
                             Name = "CanDeleteUser"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedOn = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1500),
+                            CreatedOn = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6517),
                             Description = "Can edit user",
                             IsDeleted = false,
-                            LastModified = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1500),
+                            LastModified = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6518),
                             Name = "CanEditUser"
                         },
                         new
                         {
                             Id = 4,
-                            CreatedOn = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1500),
+                            CreatedOn = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6521),
                             Description = "Can invite user",
                             IsDeleted = false,
-                            LastModified = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1500),
+                            LastModified = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6522),
                             Name = "CanInviteUser"
                         },
                         new
                         {
                             Id = 5,
-                            CreatedOn = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1510),
+                            CreatedOn = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6524),
                             Description = "Can View user",
                             IsDeleted = false,
-                            LastModified = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1510),
+                            LastModified = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6525),
                             Name = "CanViewUsers"
                         },
                         new
                         {
                             Id = 6,
-                            CreatedOn = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1510),
+                            CreatedOn = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6528),
                             Description = "Can View Loans",
                             IsDeleted = false,
-                            LastModified = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1510),
+                            LastModified = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6529),
                             Name = "CanViewLoans"
                         },
                         new
                         {
                             Id = 7,
-                            CreatedOn = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1510),
+                            CreatedOn = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6531),
                             Description = "Can Approve Loans",
                             IsDeleted = false,
-                            LastModified = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1510),
+                            LastModified = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6532),
                             Name = "CanApproveLoans"
                         },
                         new
                         {
                             Id = 8,
-                            CreatedOn = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1510),
+                            CreatedOn = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6535),
                             Description = "Can Reject Loans",
                             IsDeleted = false,
-                            LastModified = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1510),
+                            LastModified = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6536),
                             Name = "CanRejectLoans"
                         },
                         new
                         {
                             Id = 9,
-                            CreatedOn = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1520),
+                            CreatedOn = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6539),
                             Description = "Can WriteOff Loans",
                             IsDeleted = false,
-                            LastModified = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1520),
+                            LastModified = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6540),
                             Name = "CanWriteOffLoans"
                         },
                         new
                         {
                             Id = 10,
-                            CreatedOn = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1520),
+                            CreatedOn = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6543),
                             Description = "Can View Reports",
                             IsDeleted = false,
-                            LastModified = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1520),
+                            LastModified = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6544),
                             Name = "CanViewReports"
                         },
                         new
                         {
                             Id = 11,
-                            CreatedOn = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1520),
+                            CreatedOn = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6546),
                             Description = "Can Download Reports",
                             IsDeleted = false,
-                            LastModified = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1520),
+                            LastModified = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6547),
                             Name = "CanDownloadReports"
                         },
                         new
                         {
                             Id = 12,
-                            CreatedOn = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1520),
+                            CreatedOn = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6551),
                             Description = "Can Create Role",
                             IsDeleted = false,
-                            LastModified = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1520),
+                            LastModified = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6552),
                             Name = "CanCreateRole"
                         },
                         new
                         {
                             Id = 13,
-                            CreatedOn = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1530),
+                            CreatedOn = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6554),
                             Description = "Can Update Role",
                             IsDeleted = false,
-                            LastModified = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1530),
+                            LastModified = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6555),
                             Name = "CanUpdateRole"
                         },
                         new
                         {
                             Id = 14,
-                            CreatedOn = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1530),
+                            CreatedOn = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6558),
                             Description = "Can Add permissions to Role",
                             IsDeleted = false,
-                            LastModified = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1530),
+                            LastModified = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6559),
                             Name = "CanAddPermissionsToRole"
                         },
                         new
                         {
                             Id = 15,
-                            CreatedOn = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1530),
+                            CreatedOn = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6561),
                             Description = "Can View Roles",
                             IsDeleted = false,
-                            LastModified = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1530),
+                            LastModified = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6562),
                             Name = "CanViewRoles"
                         },
                         new
                         {
                             Id = 16,
-                            CreatedOn = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1530),
+                            CreatedOn = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6564),
                             Description = "Can View Tickets",
                             IsDeleted = false,
-                            LastModified = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1530),
+                            LastModified = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6565),
                             Name = "CanViewTickets"
                         },
                         new
                         {
                             Id = 17,
-                            CreatedOn = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1530),
+                            CreatedOn = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6568),
                             Description = "Can View Tickets",
                             IsDeleted = false,
-                            LastModified = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1530),
+                            LastModified = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6569),
                             Name = "CanViewTickets"
                         },
                         new
                         {
                             Id = 18,
-                            CreatedOn = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1540),
+                            CreatedOn = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6571),
                             Description = "Can Open/Close Tickets",
                             IsDeleted = false,
-                            LastModified = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1540),
+                            LastModified = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6572),
                             Name = "CanOpenOrCloseTicket"
                         },
                         new
                         {
                             Id = 19,
-                            CreatedOn = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1540),
+                            CreatedOn = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6575),
                             Description = "Can Respond to Tickets",
                             IsDeleted = false,
-                            LastModified = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1540),
+                            LastModified = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6575),
                             Name = "CanRespondToTicket"
                         },
                         new
                         {
                             Id = 20,
-                            CreatedOn = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1540),
+                            CreatedOn = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6578),
                             Description = "Can View Configurations",
                             IsDeleted = false,
-                            LastModified = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1540),
+                            LastModified = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6579),
                             Name = "CanViewConfigurations"
                         },
                         new
                         {
                             Id = 21,
-                            CreatedOn = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1540),
+                            CreatedOn = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6582),
                             Description = "Can Update Maker Checker Configurations",
                             IsDeleted = false,
-                            LastModified = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1540),
+                            LastModified = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6583),
                             Name = "CanUpdateMakerCheckerConfiguration"
                         },
                         new
                         {
                             Id = 22,
-                            CreatedOn = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1540),
+                            CreatedOn = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6586),
                             Description = "Can Create Loan Configuration",
                             IsDeleted = false,
-                            LastModified = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1550),
+                            LastModified = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6587),
                             Name = "CanCreateLoanConfiguration"
                         },
                         new
                         {
                             Id = 23,
-                            CreatedOn = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1550),
+                            CreatedOn = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6589),
                             Description = "Can Update Loan Configuration",
                             IsDeleted = false,
-                            LastModified = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1550),
+                            LastModified = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6590),
                             Name = "CanUpdateLoanConfiguration"
                         },
                         new
                         {
                             Id = 24,
-                            CreatedOn = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1550),
+                            CreatedOn = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6592),
                             Description = "Can Delete Loan Configuration",
                             IsDeleted = false,
-                            LastModified = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(1550),
+                            LastModified = new DateTime(2024, 8, 11, 16, 47, 22, 428, DateTimeKind.Utc).AddTicks(6593),
                             Name = "CanDeleteLoanConfiguration"
                         });
                 });
@@ -818,7 +794,7 @@ namespace Trivister.DataStore.Migrations
                             UserId = new Guid("363b37a0-c306-4472-a405-4b576334cca0"),
                             RoleId = new Guid("3e7d9440-48d7-4174-b9c5-0ea5be7d9e7d"),
                             IsDeleted = false,
-                            LastModified = new DateTime(2023, 8, 11, 15, 23, 51, 50, DateTimeKind.Utc).AddTicks(8390)
+                            LastModified = new DateTime(2024, 8, 11, 16, 47, 22, 430, DateTimeKind.Utc).AddTicks(2717)
                         });
                 });
 

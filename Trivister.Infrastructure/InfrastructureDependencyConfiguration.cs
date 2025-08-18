@@ -16,6 +16,7 @@ public static class InfrastructureDependencyConfiguration
 {
     public static IServiceCollection ConfigureInfrastructure(this IServiceCollection builder, IConfiguration configuration)
     {
+        builder.AddOptions<SendGridOption>().BindConfiguration(nameof(SendGridOption));
         builder.AddScoped<IProfileService, ProfileService>();
         builder.AddIdentityServer(options =>
             {
@@ -65,5 +66,17 @@ public static class InfrastructureDependencyConfiguration
         }).SetHandlerLifetime(Timeout.InfiniteTimeSpan);
         
         return builder;
+    }
+
+    public static void AddSendGrid(this WebApplicationBuilder builder)
+    {
+        var sendGridOptions = builder.Services.BuildServiceProvider().
+                  GetRequiredService<IOptionsMonitor<SendGridOption>>().
+                  CurrentValue;
+
+        builder.Services.
+            AddFluentEmail(sendGridOptions.DefaultFromEmail).
+            AddSendGridSender(sendGridOptions.SendGridApiKey)
+            .AddRazorRenderer();
     }
 }
