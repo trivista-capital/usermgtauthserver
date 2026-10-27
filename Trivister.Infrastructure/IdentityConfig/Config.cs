@@ -59,6 +59,8 @@ public static class Config
                 {
                     "https://localhost:7262/signin-oidc",
                     "http://borrow-ease-admin.trivistang.com/signin-oidc",
+                    "https://admin.borrow-ease.net/signin-oidc",
+                    "https://mobile.borrow-ease.net/signin-oidc",
                     "http://localhost:3000/signin-oidc",
                     //"http://localhost:3000/admin/signin-oidc",
                     "https://oauth.pstmn.io/v1/callback"
@@ -66,7 +68,9 @@ public static class Config
                 },
                 PostLogoutRedirectUris =
                 {
-                        "https://localhost:7262/signout-callback-oidc"
+                        "https://localhost:7262/signout-callback-oidc",
+                        "https://admin.borrow-ease.net/signout-callback-oidc",
+                        "https://mobile.borrow-ease.net/signout-callback-oidc"
                 },
                 AllowedScopes =
                 {
@@ -84,7 +88,9 @@ public static class Config
                 },
                 AllowedCorsOrigins = new List<string>
                 {
-                    "http://localhost:3000"
+                    "http://localhost:3000",
+                    "https://admin.borrow-ease.net",
+                    "https://mobile.borrow-ease.net"
                     //"http://localhost:3000/Admin",
                     //"http://borrow-ease-admin.trivistang.com"
                 }
@@ -151,6 +157,8 @@ public static class Config
                 {
                     "https://localhost:7262/signin-oidc",
                     "http://borrow-ease-admin.trivistang.com/signin-oidc",
+                    "https://admin.borrow-ease.net/signin-oidc",
+                    "https://mobile.borrow-ease.net/signin-oidc",
                     "http://localhost:3000/signin-oidc",
                     "https://oauth.pstmn.io/v1/callback"
                 },
@@ -158,6 +166,8 @@ public static class Config
                 {
                     "https://localhost:7262/signout-callback-oidc",
                     "http://borrow-ease-admin.trivistang.com/signout-callback-oidc",  //http://borrow-ease-identity.trivistang.com/  //http://borrow-ease-identity.trivistang.com/
+                    "https://admin.borrow-ease.net/signout-callback-oidc",
+                    "https://mobile.borrow-ease.net/signout-callback-oidc",
                     "http://localhost:3000/signout-callback-oidc",
                     "http://localhost:3000/Admin/signout-callback-oidc"
                 },
@@ -173,7 +183,9 @@ public static class Config
                 AllowedCorsOrigins = new List<string>
                 {
                     "http://localhost:3000",
-                    "http://borrow-ease-admin.trivistang.com"
+                    "http://borrow-ease-admin.trivistang.com",
+                    "https://admin.borrow-ease.net",
+                    "https://mobile.borrow-ease.net"
                 },
                 ClientSecrets=
                 {
